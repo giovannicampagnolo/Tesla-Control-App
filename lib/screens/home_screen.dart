@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tesla_animated_app/home_controller.dart';
+import 'package:tesla_animated_app/widgets/door_lock.dart';
 
 import '../constanins.dart';
 
@@ -30,25 +31,30 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Positioned(
                       right: constraint.maxWidth * 0.05,
-                      child: GestureDetector(
-                        onTap: _controller.updateRightDoorLock,
-                        child: AnimatedSwitcher(
-                          duration: defaultDuration,
-                          transitionBuilder: (child, animation) =>
-                              ScaleTransition(
-                            scale: animation,
-                            child: child,
-                          ),
-                          child: _controller.isRightDoorLock
-                              ? SvgPicture.asset(
-                                  "assets/icons/door_lock.svg",
-                                  key: ValueKey("lock"),
-                                )
-                              : SvgPicture.asset(
-                                  "assets/icons/door_unlock.svg",
-                                  key: ValueKey("unlock"),
-                                ),
-                        ),
+                      child: DoorLock(
+                        press: _controller.updateRightDoorLock,
+                        isLock: _controller.isRightDoorLock,
+                      ),
+                    ),
+                    Positioned(
+                      left: constraint.maxWidth * 0.05,
+                      child: DoorLock(
+                        press: _controller.updateLeftDoorLock,
+                        isLock: _controller.isLeftDoorLock,
+                      ),
+                    ),
+                    Positioned(
+                      top: constraint.maxHeight * 0.13,
+                      child: DoorLock(
+                        press: _controller.updateTopDoorLock,
+                        isLock: _controller.isTopDoorLock,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: constraint.maxHeight * 0.13,
+                      child: DoorLock(
+                        press: _controller.updateBottomDoorLock,
+                        isLock: _controller.isBottomDoorLock,
                       ),
                     ),
                   ],
@@ -59,3 +65,5 @@ class HomeScreen extends StatelessWidget {
         });
   }
 }
+
+

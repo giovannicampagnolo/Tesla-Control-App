@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tesla_animated_app/home_controller.dart';
+
+import '../constanins.dart';
+
+class DoorLock extends StatelessWidget {
+  final VoidCallback press;
+  final bool isLock;
+
+  const DoorLock({
+    Key? key,
+    required this.press,
+    required this.isLock,
+
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press,
+      child: AnimatedSwitcher(
+        duration: defaultDuration,
+        switchInCurve: Curves.easeInOutBack,
+        transitionBuilder: (child, animation) =>
+            ScaleTransition(
+              scale: animation,
+              child: child,
+            ),
+        child: isLock
+            ? SvgPicture.asset(
+          "assets/icons/door_lock.svg",
+          key: ValueKey("lock"),
+        )
+            : SvgPicture.asset(
+          "assets/icons/door_unlock.svg",
+          key: ValueKey("unlock"),
+        ),
+      ),
+    );
+  }
+}
