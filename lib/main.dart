@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Tesla Animated App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
       ),
       home: const HomeScreen(),
     );
