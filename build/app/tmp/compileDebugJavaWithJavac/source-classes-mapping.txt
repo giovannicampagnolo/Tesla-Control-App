@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/example/tesla_animated_app/BuildConfig.java
+ com.example.tesla_animated_app.BuildConfig
