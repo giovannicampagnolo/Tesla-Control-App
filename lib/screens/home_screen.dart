@@ -18,8 +18,11 @@ class HomeScreen extends StatelessWidget {
         builder: (context, snapshot) {
           return Scaffold(
             bottomNavigationBar: TeslaBottomNavigationBar(
-              onTap: (index){},
-              selectedTab: 1,
+              onTap: (index){
+                _controller.onBottomNavigationTabChange(index);
+                print(index);
+              },
+              selectedTab: _controller.selectedBottomTab,
             ),
             body: SafeArea(
               child: LayoutBuilder(builder: (context, constraint) {
