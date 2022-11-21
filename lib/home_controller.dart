@@ -5,6 +5,7 @@ class HomeController extends ChangeNotifier{
 
   void onBottomNavigationTabChange(int index){
     selectedBottomTab = index;
+    notifyListeners();
   }
 
   bool isRightDoorLock = true;
