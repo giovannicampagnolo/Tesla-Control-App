@@ -4,6 +4,7 @@ import 'package:tesla_animated_app/home_controller.dart';
 import 'package:tesla_animated_app/widgets/door_lock.dart';
 
 import '../constanins.dart';
+import '../widgets/battery_status.dart';
 import '../widgets/tesla_bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   late AnimationController _batteryAnimationController;
   late Animation<double> _animationBattery;
+  late Animation<double> _animationBatteryStatus;
 
   void setupBatteryAnimation() {
     _batteryAnimationController = AnimationController(
@@ -28,6 +30,10 @@ class _HomeScreenState extends State<HomeScreen>
     _animationBattery = CurvedAnimation(
       parent: _batteryAnimationController,
       curve: Interval(0.0, 0.5),
+    );
+    _animationBatteryStatus = CurvedAnimation(
+      parent: _batteryAnimationController,
+      curve: Interval(0.6, 1),
     );
   }
 
@@ -139,36 +145,15 @@ class _HomeScreenState extends State<HomeScreen>
                         width: constraint.maxWidth * 0.45,
                       ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "220 mi",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: Colors.white),
-                        ),
-                        Text(
-                          "62%",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                        Spacer(),
-                        Text(
-                          "Charging".toUpperCase(),
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(
-                          "18 min remaining",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Text("22 mi/hr"),
-                          Text("232 v"),
-                        ],),
-                      ],
-                    )
+                    Positioned(
+                      top: 50 * (1 - _animationBatteryStatus.value),
+                      height: constraint.maxHeight,
+                      width: constraint.maxWidth,
+                      child: Opacity(
+                        opacity: _animationBatteryStatus.value,
+                        child: BatteryStatus(constraint: constraint),
+                      ),
+                    ),
                   ],
                 );
               }),
