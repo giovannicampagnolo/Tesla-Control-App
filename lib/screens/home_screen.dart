@@ -46,11 +46,16 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _controller,
+        animation: Listenable.merge([_controller, _batteryAnimationController]),
         builder: (context, snapshot) {
           return Scaffold(
             bottomNavigationBar: TeslaBottomNavigationBar(
               onTap: (index) {
+                if (index == 1)
+                  _batteryAnimationController.forward();
+                else if (_controller.selectedBottomTab == 1 && index != 1) {
+                  _batteryAnimationController.reverse(from: 0.7);
+                }
                 _controller.onBottomNavigationTabChange(index);
                 print(index);
               },
@@ -125,9 +130,44 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       ),
                     ),
-                    SvgPicture.asset(
-                      "assets/icons/Battery.svg",
-                      width: constraint.maxWidth * 0.45,
+
+                    ///BATTERY
+                    Opacity(
+                      opacity: _animationBattery.value,
+                      child: SvgPicture.asset(
+                        "assets/icons/Battery.svg",
+                        width: constraint.maxWidth * 0.45,
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "220 mi",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: Colors.white),
+                        ),
+                        Text(
+                          "62%",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        Spacer(),
+                        Text(
+                          "Charging".toUpperCase(),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          "18 min remaining",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                          Text("22 mi/hr"),
+                          Text("232 v"),
+                        ],),
+                      ],
                     )
                   ],
                 );
