@@ -7,38 +7,47 @@ class TempBtn extends StatelessWidget {
   final String svgSrc, title;
   final bool isActive;
   final VoidCallback press;
+  final Color activeColor;
 
   const TempBtn({
     Key? key,
     required this.svgSrc,
     required this.title,
-    this.isActive = true,
+    this.isActive = false,
     required this.press,
+    this.activeColor = primaryColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 50,
-          width: 50,
-          child: SvgPicture.asset(
-            svgSrc,
-            color: Colors.white30,
+    return GestureDetector(
+      onTap: press,
+      child: Column(
+        children: [
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeInOutBack,
+            height: isActive ? 76 : 50,
+            width:  isActive ? 76 : 50,
+            child: SvgPicture.asset(
+              svgSrc,
+              color: isActive ? primaryColor : Colors.white30,
+            ),
           ),
-        ),
-        SizedBox(
-          height: defaultPadding / 2,
-        ),
-        Text(
-          title.toUpperCase(),
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white30,
+          SizedBox(
+            height: defaultPadding / 2,
           ),
-        ),
-      ],
+          AnimatedDefaultTextStyle(
+            duration: Duration(milliseconds: 200),
+            style: TextStyle(
+              fontSize: 16,
+              color: isActive ? primaryColor : Colors.white30,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            ),
+            child: Text(title.toUpperCase(),),
+          ),
+        ],
+      ),
     );
   }
 }
