@@ -5,6 +5,7 @@ import 'package:tesla_animated_app/widgets/door_lock.dart';
 
 import '../constanins.dart';
 import '../widgets/battery_status.dart';
+import '../widgets/temp_btn.dart';
 import '../widgets/tesla_bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,13 +15,15 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final HomeController _controller = HomeController();
 
   late AnimationController _batteryAnimationController;
   late Animation<double> _animationBattery;
   late Animation<double> _animationBatteryStatus;
+
+  late AnimationController _tempAnimationController;
+  late Animation<double> _animationCarShift;
 
   void setupBatteryAnimation() {
     _batteryAnimationController = AnimationController(
@@ -37,31 +40,52 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
+  void setupTempAnimation() {
+    _tempAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+    _animationCarShift = CurvedAnimation(
+      parent: _tempAnimationController,
+      curve: Interval(0.2, 0.4),
+    );
+  }
+
   @override
   void initState() {
     setupBatteryAnimation();
+    setupTempAnimation();
     super.initState();
   }
 
   @override
   void dispose() {
     _batteryAnimationController.dispose();
+    _tempAnimationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: Listenable.merge([_controller, _batteryAnimationController]),
+        animation: Listenable.merge([
+          _controller,
+          _batteryAnimationController,
+          _tempAnimationController,
+        ]),
         builder: (context, snapshot) {
           return Scaffold(
             bottomNavigationBar: TeslaBottomNavigationBar(
               onTap: (index) {
                 if (index == 1)
                   _batteryAnimationController.forward();
-                else if (_controller.selectedBottomTab == 1 && index != 1) {
+                else if (_controller.selectedBottomTab == 1 && index != 1)
                   _batteryAnimationController.reverse(from: 0.7);
-                }
+
+                if (index == 2)
+                  _tempAnimationController.forward();
+                else if (_controller.selectedBottomTab == 2 && index != 2)
+                  _tempAnimationController.reverse(from: 0.4);
                 _controller.onBottomNavigationTabChange(index);
                 print(index);
               },
@@ -72,12 +96,21 @@ class _HomeScreenState extends State<HomeScreen>
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: constraint.maxHeight * 0.1),
-                      child: SvgPicture.asset(
-                        "assets/icons/Car.svg",
-                        width: double.infinity,
+                    SizedBox(
+                      height: constraint.maxHeight,
+                      width: constraint.maxWidth,
+                    ),
+                    Positioned(
+                      left: constraint.maxWidth / 2 * _animationCarShift.value,
+                      height: constraint.maxHeight,
+                      width: constraint.maxWidth,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: constraint.maxHeight * 0.1),
+                        child: SvgPicture.asset(
+                          "assets/icons/Car.svg",
+                          width: double.infinity,
+                        ),
                       ),
                     ),
                     AnimatedPositioned(
@@ -145,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen>
                         width: constraint.maxWidth * 0.45,
                       ),
                     ),
+
                     Positioned(
                       top: 50 * (1 - _animationBatteryStatus.value),
                       height: constraint.maxHeight,
@@ -153,6 +187,13 @@ class _HomeScreenState extends State<HomeScreen>
                         opacity: _animationBatteryStatus.value,
                         child: BatteryStatus(constraint: constraint),
                       ),
+                    ),
+
+                    ///TEMPERATURE
+                    TempBtn(
+                      svgSrc: "assets/icons/coolShape.svg",
+                      title: "Cool",
+                      press: (){},
                     ),
                   ],
                 );
