@@ -20,23 +20,26 @@ class TempDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              TempBtn(
-                isActive: _controller.isCoolSelected,
-                svgSrc: "assets/icons/coolShape.svg",
-                title: "Cool",
-                press: _controller.updateIsCoolSelectedTab,
-              ),
-              const SizedBox(width: defaultPadding),
-              TempBtn(
-                isActive: !_controller.isCoolSelected,
-                svgSrc: "assets/icons/heatShape.svg",
-                title: "Heat",
-                press: _controller.updateIsCoolSelectedTab,
-                activeColor: redColor,
-              ),
-            ],
+          SizedBox(
+            height: 120,
+            child: Row(
+              children: [
+                TempBtn(
+                  isActive: _controller.isCoolSelected,
+                  svgSrc: "assets/icons/coolShape.svg",
+                  title: "Cool",
+                  press: _controller.updateIsCoolSelectedTab,
+                ),
+                const SizedBox(width: defaultPadding),
+                TempBtn(
+                  isActive: !_controller.isCoolSelected,
+                  svgSrc: "assets/icons/heatShape.svg",
+                  title: "Heat",
+                  press: _controller.updateIsCoolSelectedTab,
+                  activeColor: redColor,
+                ),
+              ],
+            ),
           ),
           Spacer(),
           Column(
