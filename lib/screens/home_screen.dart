@@ -216,20 +216,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       right: -100 * (1 - _animationCoolGlow.value),
                       child: AnimatedSwitcher(
                         duration: defaultDuration,
-                        child: _controller.isCoolSelected ? Image.asset(
-                          "assets/images/Cool_glow_2.png",
-                          key: UniqueKey(),
-                          width: 200,
-                        ) : Image.asset(
-                          "assets/images/Hot_glow_4.png",
-                          key: UniqueKey(),
-                          width: 200,
-                        ),
+                        child: _controller.isCoolSelected
+                            ? Image.asset(
+                                "assets/images/Cool_glow_2.png",
+                                key: UniqueKey(),
+                                width: 200,
+                              )
+                            : Image.asset(
+                                "assets/images/Hot_glow_4.png",
+                                key: UniqueKey(),
+                                width: 200,
+                              ),
                       ),
                     ),
 
                     ///TYRE
-                   if(_controller.isShowTyre) ...tyres(constraint),
+                    if (_controller.isShowTyre) ...tyres(constraint),
+                    GridView.builder(
+                      itemCount: 4,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        mainAxisSpacing: defaultPadding,
+                        crossAxisSpacing: defaultPadding,
+                        childAspectRatio: constraint.maxWidth / constraint.maxHeight,
+                      ),
+                      itemBuilder: (context, index) => Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white10,
+                          border: Border.all(
+                            color:primaryColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(6.0))
+                        ),
+                        child: Column(
+                          children: [
+                            Text.rich(TextSpan(text: "23.6")),
+                          ]
+                        ),
+                      ),
+                    ),
                   ],
                 );
               }),
