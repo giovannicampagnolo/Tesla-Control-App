@@ -6,6 +6,7 @@ import 'package:tesla_animated_app/widgets/door_lock.dart';
 import '../constanins.dart';
 import '../widgets/battery_status.dart';
 import '../widgets/temp_btn.dart';
+import '../widgets/temp_details.dart';
 import '../widgets/tesla_bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -190,24 +191,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
 
                     ///TEMPERATURE
-                    Row(
-                      children: [
-                        TempBtn(
-                          isActive: _controller.isCoolSelected,
-                          svgSrc: "assets/icons/coolShape.svg",
-                          title: "Cool",
-                          press: _controller.updateIsCoolSelectedTab,
-                        ),
-                        const SizedBox(height: defaultPadding ),
-                        TempBtn(
-                          isActive: !_controller.isCoolSelected,
-                          svgSrc: "assets/icons/heatShape.svg",
-                          title: "Heat",
-                          press: _controller.updateIsCoolSelectedTab,
-                          activeColor: redColor,
-                        ),
-                      ],
-                    ),
+                    TempDetails(controller: _controller),
                   ],
                 );
               }),
