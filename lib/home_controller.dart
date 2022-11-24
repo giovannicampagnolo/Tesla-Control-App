@@ -39,4 +39,16 @@ class HomeController extends ChangeNotifier{
     isCoolSelected = !isCoolSelected;
     notifyListeners();
   }
+
+  bool isShowTyre = false;
+
+  void showTyreController(int index){
+    if(selectedBottomTab != 3 && index == 3){
+      isShowTyre = true;
+      notifyListeners();
+    } else{
+      isShowTyre = false;
+      notifyListeners();
+    }
+  }
 }

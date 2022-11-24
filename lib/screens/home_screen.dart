@@ -8,6 +8,7 @@ import '../widgets/battery_status.dart';
 import '../widgets/temp_btn.dart';
 import '../widgets/temp_details.dart';
 import '../widgets/tesla_bottom_navigation_bar.dart';
+import '../widgets/tyre.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController _batteryAnimationController;
   late Animation<double> _animationBattery;
   late Animation<double> _animationBatteryStatus;
+  late Animation<double> _animationTempShowInfo;
+  late Animation<double> _animationCoolGlow;
 
   late AnimationController _tempAnimationController;
   late Animation<double> _animationCarShift;
@@ -49,6 +52,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _animationCarShift = CurvedAnimation(
       parent: _tempAnimationController,
       curve: Interval(0.2, 0.4),
+    );
+    _animationTempShowInfo = CurvedAnimation(
+      parent: _tempAnimationController,
+      curve: Interval(0.45, 0.65),
+    );
+    _animationCoolGlow = CurvedAnimation(
+      parent: _tempAnimationController,
+      curve: Interval(0.7, 1),
     );
   }
 
@@ -87,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   _tempAnimationController.forward();
                 else if (_controller.selectedBottomTab == 2 && index != 2)
                   _tempAnimationController.reverse(from: 0.4);
+                _controller.showTyreController(index);
                 _controller.onBottomNavigationTabChange(index);
                 print(index);
               },
@@ -191,7 +203,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
 
                     ///TEMPERATURE
-                    TempDetails(controller: _controller),
+                    Positioned(
+                      height: constraint.maxHeight,
+                      width: constraint.maxWidth,
+                      top: 60 * (1 - _animationTempShowInfo.value),
+                      child: Opacity(
+                        opacity: _animationTempShowInfo.value,
+                        child: TempDetails(controller: _controller),
+                      ),
+                    ),
+                    Positioned(
+                      right: -100 * (1 - _animationCoolGlow.value),
+                      child: AnimatedSwitcher(
+                        duration: defaultDuration,
+                        child: _controller.isCoolSelected ? Image.asset(
+                          "assets/images/Cool_glow_2.png",
+                          key: UniqueKey(),
+                          width: 200,
+                        ) : Image.asset(
+                          "assets/images/Hot_glow_4.png",
+                          key: UniqueKey(),
+                          width: 200,
+                        ),
+                      ),
+                    ),
+
+                    ///TYRE
+                   if(_controller.isShowTyre) ...tyres(constraint),
                   ],
                 );
               }),
