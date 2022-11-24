@@ -204,6 +204,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           svgSrc: "assets/icons/heatShape.svg",
                           title: "Heat",
                           press: _controller.updateIsCoolSelectedTab,
+                          activeColor: redColor,
                         ),
                       ],
                     ),

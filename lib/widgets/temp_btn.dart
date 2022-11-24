@@ -31,7 +31,7 @@ class TempBtn extends StatelessWidget {
             width:  isActive ? 76 : 50,
             child: SvgPicture.asset(
               svgSrc,
-              color: isActive ? primaryColor : Colors.white30,
+              color: isActive ? activeColor : Colors.white30,
             ),
           ),
           SizedBox(
@@ -41,7 +41,7 @@ class TempBtn extends StatelessWidget {
             duration: Duration(milliseconds: 200),
             style: TextStyle(
               fontSize: 16,
-              color: isActive ? primaryColor : Colors.white30,
+              color: isActive ? activeColor : Colors.white30,
               fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
             child: Text(title.toUpperCase(),),
