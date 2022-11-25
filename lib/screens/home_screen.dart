@@ -5,10 +5,10 @@ import 'package:tesla_animated_app/widgets/door_lock.dart';
 
 import '../constanins.dart';
 import '../widgets/battery_status.dart';
-import '../widgets/temp_btn.dart';
 import '../widgets/temp_details.dart';
 import '../widgets/tesla_bottom_navigation_bar.dart';
 import '../widgets/tyre.dart';
+import '../widgets/tyre_psi_card.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -241,41 +241,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         childAspectRatio:
                             constraint.maxWidth / constraint.maxHeight,
                       ),
-                      itemBuilder: (context, index) => Container(
-                        padding: EdgeInsets.all(defaultPadding),
-                        decoration: BoxDecoration(
-                            color: Colors.white10,
-                            border: Border.all(
-                              color: primaryColor,
-                              width: 2,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(6.0))),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                          Text.rich(
-                            TextSpan(
-                              text: "23.6",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                              children: [
-                                TextSpan(
-                                  text:"psi",
-                                  style: TextStyle( fontSize:24),
-                                ),
-                              ]
-                            ),
-                          ),
-                          const SizedBox(height: defaultPadding),
-                          Text("41\u2103", style: TextStyle( fontSize:16),)
-                        ],
-                        ),
+                      itemBuilder: (context, index) => TyrePsiCard(
+                        isBottomTwoTyre: index > 2,
                       ),
                     ),
                   ],

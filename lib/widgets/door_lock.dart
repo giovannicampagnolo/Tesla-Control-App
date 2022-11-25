@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tesla_animated_app/home_controller.dart';
 
 import '../constanins.dart';
 
