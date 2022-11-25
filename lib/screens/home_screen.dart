@@ -235,24 +235,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     GridView.builder(
                       itemCount: 4,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                        crossAxisCount: 2,
                         mainAxisSpacing: defaultPadding,
                         crossAxisSpacing: defaultPadding,
-                        childAspectRatio: constraint.maxWidth / constraint.maxHeight,
+                        childAspectRatio:
+                            constraint.maxWidth / constraint.maxHeight,
                       ),
                       itemBuilder: (context, index) => Container(
+                        padding: EdgeInsets.all(defaultPadding),
                         decoration: BoxDecoration(
-                          color: Colors.white10,
-                          border: Border.all(
-                            color:primaryColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))
-                        ),
+                            color: Colors.white10,
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 2,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(6.0))),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text.rich(TextSpan(text: "23.6")),
-                          ]
+                          Text.rich(
+                            TextSpan(
+                              text: "23.6",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                              children: [
+                                TextSpan(
+                                  text:"psi",
+                                  style: TextStyle( fontSize:24),
+                                ),
+                              ]
+                            ),
+                          ),
+                          const SizedBox(height: defaultPadding),
+                          Text("41\u2103", style: TextStyle( fontSize:16),)
+                        ],
                         ),
                       ),
                     ),
