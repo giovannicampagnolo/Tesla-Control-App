@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../constanins.dart';
 
-import '../constanins.dart';
 
 class TeslaBottomNavigationBar extends StatelessWidget {
   final int selectedTab;
