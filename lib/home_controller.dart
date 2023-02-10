@@ -1,54 +1,62 @@
 import 'package:flutter/material.dart';
 
-class HomeController extends ChangeNotifier{
+class HomeController extends ChangeNotifier {
   int selectedBottomTab = 0;
 
-  void onBottomNavigationTabChange(int index){
+  void onBottomNavigationTabChange(int index) {
     selectedBottomTab = index;
     notifyListeners();
   }
 
   bool isRightDoorLock = true;
   bool isLeftDoorLock = true;
-  bool isTopDoorLock = true;
-  bool isBottomDoorLock = true;
+  bool isBonnetLock = true;
+  bool isTrunkLock = true;
 
-  void updateRightDoorLock(){
+  void updateRightDoorLock() {
     isRightDoorLock = !isRightDoorLock;
     notifyListeners();
   }
 
-  void updateLeftDoorLock(){
+  void updateLeftDoorLock() {
     isLeftDoorLock = !isLeftDoorLock;
     notifyListeners();
   }
 
-  void updateTopDoorLock(){
-    isTopDoorLock = !isTopDoorLock;
+  void updateBonnetDoorLock() {
+    isBonnetLock = !isBonnetLock;
     notifyListeners();
   }
 
-  void updateBottomDoorLock(){
-    isBottomDoorLock = !isBottomDoorLock;
+  void updateTrunkDoorLock() {
+    isTrunkLock = !isTrunkLock;
     notifyListeners();
   }
 
   bool isCoolSelected = true;
 
-  void updateIsCoolSelectedTab(){
+  void updateCoolSelectedTab() {
     isCoolSelected = !isCoolSelected;
     notifyListeners();
   }
 
   bool isShowTyre = false;
 
-  void showTyreController(int index){
-    if(selectedBottomTab != 3 && index == 3){
-      Future.delayed(Duration(milliseconds: 400), (){
-        isShowTyre = true;
-        notifyListeners();
-      });
-    } else{
+  void showTyreController(int index) {
+    // Once user on this tyre tab we want to show the tyre
+    // let's define this method on bottom navigation
+    if (selectedBottomTab != 3 && index == 3) {
+      // Because we call this method before [onBottomNavigationTabChange]
+      // as you can see we want to show those tyres a little bit later
+      // Now  when the car on center after that we set isShowTyre = true
+      Future.delayed(
+        Duration(milliseconds: 400),
+        () {
+          isShowTyre = true;
+          notifyListeners();
+        },
+      );
+    } else {
       isShowTyre = false;
       notifyListeners();
     }
@@ -56,15 +64,15 @@ class HomeController extends ChangeNotifier{
 
   bool isShowTyreStatus = false;
 
-  void tyreStatusController(int index){
-    if(selectedBottomTab != 3 && index == 3){
+  void tyreStatusController(int index) {
+    if (selectedBottomTab != 3 && index == 3) {
       isShowTyreStatus = true;
       notifyListeners();
     } else {
-     Future.delayed(Duration(milliseconds: 400), (){
-       isShowTyreStatus = false;
-       notifyListeners();
-     });
+      Future.delayed(Duration(milliseconds: 400), () {
+        isShowTyreStatus = false;
+        notifyListeners();
+      });
     }
   }
 }

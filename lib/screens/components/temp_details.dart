@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:tesla_animated_app/widgets/temp_btn.dart';
 
-import '../constanins.dart';
-import '../home_controller.dart';
+import '../../constanins.dart';
+import '../../home_controller.dart';
+import 'tmp_btn.dart';
 
+// This is what we want
 class TempDetails extends StatelessWidget {
-  final HomeController _controller;
-
   const TempDetails({
     Key? key,
     required HomeController controller,
   })  : _controller = controller,
         super(key: key);
+
+  final HomeController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +29,15 @@ class TempDetails extends StatelessWidget {
                   isActive: _controller.isCoolSelected,
                   svgSrc: "assets/icons/coolShape.svg",
                   title: "Cool",
-                  press: _controller.updateIsCoolSelectedTab,
+                  press: _controller.updateCoolSelectedTab,
                 ),
                 const SizedBox(width: defaultPadding),
                 TempBtn(
                   isActive: !_controller.isCoolSelected,
                   svgSrc: "assets/icons/heatShape.svg",
                   title: "Heat",
-                  press: _controller.updateIsCoolSelectedTab,
                   activeColor: redColor,
+                  press: _controller.updateCoolSelectedTab,
                 ),
               ],
             ),
@@ -47,10 +48,7 @@ class TempDetails extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_drop_up,
-                  size: 48,
-                ),
+                icon: Icon(Icons.arrow_drop_up, size: 48),
               ),
               Text(
                 "29" + "\u2103",
@@ -59,10 +57,7 @@ class TempDetails extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  size: 48,
-                ),
+                icon: Icon(Icons.arrow_drop_down, size: 48),
               ),
             ],
           ),
@@ -75,12 +70,12 @@ class TempDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "inside".toUpperCase(),
+                    "Inside".toUpperCase(),
                   ),
                   Text(
                     "20" + "\u2103",
                     style: Theme.of(context).textTheme.headline5,
-                  ),
+                  )
                 ],
               ),
               const SizedBox(width: defaultPadding),
@@ -88,10 +83,8 @@ class TempDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "outside".toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.white54,
-                    ),
+                    "Inside".toUpperCase(),
+                    style: TextStyle(color: Colors.white54),
                   ),
                   Text(
                     "35" + "\u2103",
@@ -99,7 +92,7 @@ class TempDetails extends StatelessWidget {
                         .textTheme
                         .headline5!
                         .copyWith(color: Colors.white54),
-                  ),
+                  )
                 ],
               ),
             ],

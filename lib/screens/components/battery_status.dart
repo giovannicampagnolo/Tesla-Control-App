@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../constanins.dart';
+import '../../constanins.dart';
 
 class BatteryStatus extends StatelessWidget {
-  final BoxConstraints constraint;
   const BatteryStatus({
     Key? key,
-    required this.constraint,
+    required this.constrains,
   }) : super(key: key);
+
+  final BoxConstraints constrains;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class BatteryStatus extends StatelessWidget {
           "18 min remaining",
           style: TextStyle(fontSize: 20),
         ),
-        SizedBox(height: constraint.maxHeight * 0.14),
+        SizedBox(height: constrains.maxHeight * 0.14),
         DefaultTextStyle(
           style: TextStyle(
             fontSize: 18,
